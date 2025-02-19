@@ -6,6 +6,10 @@
 #include <WiFiClient.h>
 #include <BlynkSimpleEsp32.h>
 #include <AceButton.h>
+#include "DHT.h"
+
+#define DHTTYPE DHT11
+#define DHTPIN 12
 
 using namespace ace_button;
 
@@ -74,6 +78,10 @@ BLYNK_CONNECTED(){
   }
 }
 
+const long interval = 5000;
+unsigned long lastCheck = 0;
+DHT dht(DHTPIN, DHTTYPE);
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
@@ -110,6 +118,8 @@ void setup() {
     Blynk.virtualWrite(VPIN_R, rState);
     Blynk.virtualWrite(VPIN_G, gState);
   }
+
+  dht.begin();
 }
 
 void loop() {
@@ -119,6 +129,21 @@ void loop() {
 
   aBtn1.check();
   aBtn2.check();
+
+  if((millis() - lastCheck) >= interval){
+    float h = dht.readHumidity();
+    float t = dht.readTemperature();
+
+    Blynk.virtualWrite(V2, t);
+    Blynk.virtualWrite(V3, h);
+
+    Serial.print("Temperature: ");
+    Serial.println(t);
+    Serial.print("Humidity: ");
+    Serial.println(h);
+
+    lastCheck = millis();
+  }
 }
 
 void button1Handler(AceButton*, uint8_t eventType, uint8_t){
