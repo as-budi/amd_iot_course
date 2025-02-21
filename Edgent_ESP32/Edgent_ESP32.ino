@@ -32,7 +32,7 @@
 #define APP_DEBUG
 
 // Uncomment your board, or configure a custom board in Settings.h
-#define USE_ESP32_DEV_MODULE
+//#define USE_ESP32_DEV_MODULE
 //#define USE_ESP32C3_DEV_MODULE
 //#define USE_ESP32S2_DEV_KIT
 //#define USE_WROVER_BOARD
@@ -40,8 +40,6 @@
 //#define USE_TTGO_T_OI
 
 #include <WiFi.h>
-#include <WiFiClient.h>
-#include <BlynkSimpleEsp32.h>
 #include "BlynkEdgent.h"
 #include <AceButton.h>
 #include "DHT.h"
