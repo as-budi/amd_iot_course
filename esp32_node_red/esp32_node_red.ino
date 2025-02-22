@@ -9,7 +9,7 @@ using namespace ace_button;
 #define DHTPIN 12
 DHT dht(DHTPIN, DHTTYPE);
 
-const char *AP_SSID = "ASB";
+const char *AP_SSID = "zenfone9";
 const char *AP_PWD = "zxcvbnm9";
 
 const char *mqtt_broker = "54.169.36.133";

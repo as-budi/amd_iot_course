@@ -6,14 +6,18 @@
 #include <WiFiClient.h>
 #include <BlynkSimpleEsp32.h>
 #include <AceButton.h>
+#include <Wire.h>
+#include <Adafruit_BMP085.h>
 #include "DHT.h"
 
 #define DHTTYPE DHT11
 #define DHTPIN 12
 
+Adafruit_BMP085 bmp;
+
 using namespace ace_button;
 
-const char *ssid = "ASB";
+const char *ssid = "zenfone9";
 const char *password = "zxcvbnm9";
 
 bool fetch_blynk_state = true;
@@ -120,6 +124,10 @@ void setup() {
   }
 
   dht.begin();
+  if (!bmp.begin()) {
+    Serial.println("Could not find a valid BMP085/BMP180 sensor, check wiring!");
+    while (1) {}
+  }
 }
 
 void loop() {
@@ -133,14 +141,18 @@ void loop() {
   if((millis() - lastCheck) >= interval){
     float h = dht.readHumidity();
     float t = dht.readTemperature();
+    int p = bmp.readPressure();
 
     Blynk.virtualWrite(V2, t);
     Blynk.virtualWrite(V3, h);
+    Blynk.virtualWrite(V4, p);
 
     Serial.print("Temperature: ");
     Serial.println(t);
     Serial.print("Humidity: ");
     Serial.println(h);
+    Serial.print("Pressure = ");
+    Serial.println(p);
 
     lastCheck = millis();
   }
