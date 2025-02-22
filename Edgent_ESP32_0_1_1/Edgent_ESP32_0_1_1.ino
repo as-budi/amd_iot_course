@@ -134,8 +134,8 @@ void setup()
   config1.setEventHandler(button1Handler);
   config2.setEventHandler(button2Handler);
 
-  aBtn1.init(button1);
-  aBtn2.init(button2);
+  // aBtn1.init(button1);
+  // aBtn2.init(button2);
 
   digitalWrite(wifiLed, LOW);
 

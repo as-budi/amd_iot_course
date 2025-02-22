@@ -155,8 +155,8 @@ void loop() {
   Blynk.run();
   timer.run();
 
-  aBtn1.check();
-  aBtn2.check();
+  // aBtn1.check();
+  // aBtn2.check();
 
   if((millis() - lastCheck) >= interval){
     float h = dht.readHumidity();
